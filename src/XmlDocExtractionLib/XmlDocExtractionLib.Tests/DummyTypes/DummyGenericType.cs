@@ -90,6 +90,22 @@
         }
 
         /// <summary>
+        /// op_Explicit docs.
+        /// </summary>
+        public static unsafe explicit operator Dictionary<S, List<S*[]>>(DummyGenericType<T, S> x)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// op_Implicit docs.
+        /// </summary>
+        public static unsafe implicit operator Dictionary<S, List<T*[]>>(DummyGenericType<T, S> x)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// DummyGenericNestedType docs.
         /// </summary>
         public class DummyGenericNestedType<R>

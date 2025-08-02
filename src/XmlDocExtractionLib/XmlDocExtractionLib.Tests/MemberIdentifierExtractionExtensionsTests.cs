@@ -192,6 +192,8 @@ namespace XmlDocExtractionLib.Tests
         [DataRow(typeof(DummyClass), "op_Addition")]
         [DataRow(typeof(DummyClass), "Finalize")]
         [DataRow(typeof(DummyGenericType<,>), "MethodA")]
+        [DataRow(typeof(DummyGenericType<,>), "op_Explicit")]
+        [DataRow(typeof(DummyGenericType<,>), "op_Implicit")]
         [DataRow(typeof(DummyGenericType<,>.DummyGenericNestedType<>), "Method01")]
         [DataRow(typeof(IDummyInterface), "Method001")]
         [DataRow(typeof(IDummyGenericInterface<>), "Method0001")]

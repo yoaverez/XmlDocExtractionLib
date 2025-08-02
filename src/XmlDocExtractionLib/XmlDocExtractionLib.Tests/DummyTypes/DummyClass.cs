@@ -56,5 +56,13 @@
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// op_Explicit docs.
+        /// </summary>
+        public static explicit operator List<int>(DummyClass x)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

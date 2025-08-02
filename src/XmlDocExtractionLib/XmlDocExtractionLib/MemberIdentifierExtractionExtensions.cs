@@ -91,6 +91,7 @@ namespace XmlDocExtractionLib
             {
                 methodName = "#ctor";
             }
+
             else if (methodBase.IsExplicitInterfaceImplementation(out _))
             {
                 methodName = ConvertToExplicitInterfaceImplementationIdentifier(methodName);
@@ -122,7 +123,13 @@ namespace XmlDocExtractionLib
 
             var parametersSuffix = parametersIdentifiers.Count > 0 ? $"({parametersList})" : $"";
 
-            return $"M:{reflectedTypeIdentifier}.{methodName}{methodNameGenericSuffix}{parametersSuffix}";
+            var convertionsOperatorSuffix = string.Empty;
+            if (methodBase.Name.Equals("op_Explicit") || methodBase.Name.Equals("op_Implicit"))
+            {
+                convertionsOperatorSuffix = $"~{GetParameterTypeNameIdentifier((methodBase as MethodInfo).ReturnType, typeGenericMap, methodGenericMap)}";
+            }
+
+            return $"M:{reflectedTypeIdentifier}.{methodName}{methodNameGenericSuffix}{parametersSuffix}{convertionsOperatorSuffix}";
         }
 
         /// <summary>
