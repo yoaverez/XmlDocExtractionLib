@@ -21,6 +21,30 @@
         public event Action<int> Event1;
 
         /// <summary>
+        /// Ctor1 docs.
+        /// </summary>
+        public DummyClass()
+        {
+
+        }
+
+        /// <summary>
+        /// Ctor2 docs.
+        /// </summary>
+        public unsafe DummyClass(int[] a, bool*[,][] b)
+        {
+
+        }
+
+        /// <summary>
+        /// Finalize docs.
+        /// </summary>
+        ~DummyClass()
+        {
+
+        }
+
+        /// <summary>
         /// Method1 docs.
         /// </summary>
         public unsafe int Method1(int*[][,,][][,,] a) { return 1; }

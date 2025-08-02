@@ -190,6 +190,7 @@ namespace XmlDocExtractionLib.Tests
 
         [DataRow(typeof(DummyClass), "Method1")]
         [DataRow(typeof(DummyClass), "op_Addition")]
+        [DataRow(typeof(DummyClass), "Finalize")]
         [DataRow(typeof(DummyGenericType<,>), "MethodA")]
         [DataRow(typeof(DummyGenericType<,>.DummyGenericNestedType<>), "Method01")]
         [DataRow(typeof(IDummyInterface), "Method001")]
@@ -203,6 +204,23 @@ namespace XmlDocExtractionLib.Tests
 
             // Act
             var identifier = methodInfo.GetMethodNameIdentifier();
+
+            // Assert
+            var actualSummaryDocumentation = identifiersToSummary[identifier];
+            Assert.AreEqual(expectedSummaryDocumentation, actualSummaryDocumentation);
+        }
+
+        [DataRow(typeof(DummyClass), new Type[] { }, "Ctor1")]
+        [DataRow(typeof(DummyClass), new Type[] { typeof(int[]), typeof(bool*[,][]) }, "Ctor2")]
+        [DataTestMethod]
+        public void GetMethodNameIdentifier_Ctors_IdentifierIsCorrect(Type type, Type[] parameterTypes, string ctorName)
+        {
+            // Arrange
+            var expectedSummaryDocumentation = $"{ctorName} docs.";
+            var ctorInfo = type.GetConstructor(bindingFlags, parameterTypes);
+
+            // Act
+            var identifier = ctorInfo.GetMethodNameIdentifier();
 
             // Assert
             var actualSummaryDocumentation = identifiersToSummary[identifier];
