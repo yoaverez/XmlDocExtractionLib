@@ -22,7 +22,7 @@ namespace XmlDocExtractionLib.Tests
             identifiersToSummary = xmlDocumentation.Descendants("members")
                                                    .Single()
                                                    .Elements("member")
-                                                   .ToDictionary(x => x.Attribute("name")!.Value, x => x.Element("summary")!.Value.Trim())!;
+                                                   .ToDictionary(x => x.Attribute("name")!.Value, x => x.Element("summary")?.Value.Trim())!;
         }
 
         #region GetTypeNameIdentifier Tests
