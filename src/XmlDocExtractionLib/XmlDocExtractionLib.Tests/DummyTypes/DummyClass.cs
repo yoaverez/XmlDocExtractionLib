@@ -24,5 +24,13 @@
         /// Method1 docs.
         /// </summary>
         public unsafe int Method1(int*[][,,][][,,] a) { return 1; }
+
+        /// <summary>
+        /// op_Addition docs.
+        /// </summary>
+        public static DummyClass operator+(DummyClass dummyClass1, DummyClass dummyClass2)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

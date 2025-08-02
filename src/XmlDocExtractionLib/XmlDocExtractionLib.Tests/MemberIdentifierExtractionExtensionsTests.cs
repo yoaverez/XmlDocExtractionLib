@@ -15,7 +15,7 @@ namespace XmlDocExtractionLib.Tests
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
         {
-            bindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic;
+            bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static ;
 
             var xmlDocumentationFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             var xmlDocumentation = XDocument.Load(xmlDocumentationFile);
@@ -189,6 +189,7 @@ namespace XmlDocExtractionLib.Tests
         #region GetMethodNameIdentifier Tests
 
         [DataRow(typeof(DummyClass), "Method1")]
+        [DataRow(typeof(DummyClass), "op_Addition")]
         [DataRow(typeof(DummyGenericType<,>), "MethodA")]
         [DataRow(typeof(DummyGenericType<,>.DummyGenericNestedType<>), "Method01")]
         [DataRow(typeof(IDummyInterface), "Method001")]
