@@ -25,6 +25,22 @@ namespace XmlDocExtractionLib.Tests
                                                    .ToDictionary(x => x.Attribute("name")!.Value, x => x.Element("summary")?.Value.Trim())!;
         }
 
+        #region GetMemberIdentifier Tests
+
+        [DynamicData(nameof(ProvideMembersData), DynamicDataSourceType.Method)]
+        [DataTestMethod]
+        public void GetMemberIdentifier_IdentifierIsCorrect(MemberInfo memberInfo, string expectedSummaryDocumentation)
+        {
+            // Act
+            var identifier = memberInfo.GetMemberIdentifier();
+
+            // Assert
+            var actualSummaryDocumentation = identifiersToSummary[identifier];
+            Assert.AreEqual(expectedSummaryDocumentation, actualSummaryDocumentation);
+        }
+
+        #endregion GetMemberIdentifier Tests
+
         #region GetTypeNameIdentifier Tests
 
         [DataRow(typeof(DummyEnum), "DummyEnum docs.")]
@@ -248,5 +264,21 @@ namespace XmlDocExtractionLib.Tests
         }
 
         #endregion GetMethodNameIdentifier Tests
+
+        #region Test Dynamic Data Providers
+
+        private static IEnumerable<object[]> ProvideMembersData()
+        {
+            return new List<object[]>
+            {
+                new object[] { typeof(DummyClass), "DummyClass docs." },
+                new object[] { typeof(DummyGenericType<,>.DummyGenericNestedType<>).GetField("field01", bindingFlags)!, "field01 docs." },
+                new object[] { typeof(IDummyInterface).GetProperty("Prop001", bindingFlags)!, "Prop001 docs." },
+                new object[] { typeof(DummyGenericType<,>).GetEvent("EventA", bindingFlags)!, "EventA docs." },
+                new object[] { typeof(DummyClass).GetMethod("op_Addition", bindingFlags)!, "op_Addition docs." },
+            };
+        }
+
+        #endregion Test Dynamic Data Providers
     }
 }

@@ -13,6 +13,24 @@ namespace XmlDocExtractionLib
     public static class MemberIdentifierExtractionExtensions
     {
         /// <summary>
+        /// Gets the xml documentation identifier of the given <paramref name="memberInfo"/>.
+        /// </summary>
+        /// <param name="memberInfo">The member whose xml documentation identifier is requested.</param>
+        /// <returns>The xml documentation identifier of the given <paramref name="memberInfo"/>.</returns>
+        public static string GetMemberIdentifier(this MemberInfo memberInfo)
+        {
+            return memberInfo.MemberType switch
+            {
+                MemberTypes.TypeInfo or MemberTypes.NestedType => (memberInfo as Type)!.GetTypeNameIdentifier(),
+                MemberTypes.Field => (memberInfo as FieldInfo)!.GetFieldNameIdentifier(),
+                MemberTypes.Property => (memberInfo as PropertyInfo)!.GetPropertyNameIdentifier(),
+                MemberTypes.Event => (memberInfo as EventInfo)!.GetEventNameIdentifier(),
+                MemberTypes.Method or MemberTypes.Constructor => (memberInfo as MethodBase)!.GetMethodNameIdentifier(),
+                _ => throw new NotSupportedException($"Given member is does not have an identifier in xml documentation"),
+            };
+        }
+
+        /// <summary>
         /// Gets the xml documentation identifier of the given <paramref name="type"/>.
         /// </summary>
         /// <param name="type">The type whose xml documentation identifier is requested.</param>
