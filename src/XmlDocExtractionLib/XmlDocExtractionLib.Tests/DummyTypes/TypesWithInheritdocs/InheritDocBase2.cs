@@ -44,7 +44,7 @@
         /// <summary>
         /// Prop docs.
         /// </summary>
-        protected virtual int Prop {  get; set; }
+        protected virtual int Prop { get; set; }
 
         /// <summary>
         /// PropWithGetterOnly InheritDocBase2 docs.
@@ -81,9 +81,7 @@
         /// </summary>
         private event Action<int> PrivateEvent;
 
-        /// <summary>
-        /// Method1 InheritDocBase2 docs.
-        /// </summary>
+        /// <inheritdoc/>
         public override void Method1()
         {
             throw new NotImplementedException();
@@ -115,5 +113,37 @@
         {
 
         }
+
+        /// <inheritdoc cref="MembersExtensionsUtils.GetEventInfoFromAccessor(System.Reflection.MethodBase)"/>
+        public void MethodWithFarInheritdoc(int a)
+        {
+
+        }
+
+        /// <summary>
+        /// MethodWithParameters InheritDocBase2 docs.
+        /// </summary>
+        /// <param name="a"><inheritdoc/></param>
+        /// <param name="b"></param>
+        public override void MethodWithParameters(int a, bool b)
+        {
+
+        }
+
+        /// <summary>
+        /// <b>
+        /// <inheritdoc cref="PrivateProp"/>
+        /// level 3 docs.
+        /// </b>
+        /// </summary>
+        public int MemberWithCrefLevel3WithoutPath { get; set; }
+
+        /// <summary>
+        /// <b>
+        /// <inheritdoc cref="PrivateProp" path="/summary/node()"/>
+        /// level 3 docs.
+        /// </b>
+        /// </summary>
+        public event Action MemberWithCrefLevel3WithPath;
     }
 }

@@ -6,7 +6,7 @@
     public interface IInheritdoc1
     {
         /// <summary>
-        /// Method1 docs.
+        /// Method1 IInheritdoc1 docs.
         /// </summary>
         void Method1();
     }

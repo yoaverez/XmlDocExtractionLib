@@ -45,10 +45,12 @@
         /// </summary>
         private InheritDocBase1(long x) { }
 
+        /// <inheritdoc/>
         public abstract void Method1();
 
         /// <summary>
         /// Method2 docs.
+        /// <inheritdoc cref="Method1"/>
         /// </summary>
         public virtual void Method2()
         {
@@ -81,6 +83,16 @@
 
         /// <inheritdoc/>
         void IInheritdoc2.MethodForExplicitInterfaceImplementation()
+        {
+
+        }
+
+        /// <summary>
+        /// aaaa
+        /// </summary>
+        /// <param name="a">a</param>
+        /// <param name="b">b</param>
+        public virtual void MethodWithParameters(int a, bool b)
         {
 
         }

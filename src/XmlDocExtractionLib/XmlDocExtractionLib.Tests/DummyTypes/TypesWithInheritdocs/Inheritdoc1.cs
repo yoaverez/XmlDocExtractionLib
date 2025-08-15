@@ -102,5 +102,48 @@
         {
 
         }
+
+        /// <summary>
+        /// Do something private.
+        /// </summary>
+        /// <inheritdoc cref="IInheritdoc1.Method1"/>
+        public void MethodWithSummaryAndThenInheritdoc()
+        {
+
+        }
+
+        /// <inheritdoc cref="IInheritdoc1.Method1"/>
+        /// <summary>
+        /// Do something private.
+        /// </summary>
+        public void MethodWithInheritdocAndThenSummary()
+        {
+
+        }
+
+        /// <inheritdoc cref="MethodWithAParameter(bool)"/>
+        /// <summary>
+        /// Do something private.
+        /// </summary>
+        /// <param name="a">MethodWithInheritdocAndThenParams a param.</param>
+        public void MethodWithInheritdocAndThenParams(int a)
+        {
+
+        }
+
+        /// <summary>
+        /// MethodWithAParameter docs.
+        /// </summary>
+        /// <param name="a">param docs</param>
+        private void MethodWithAParameter(bool a)
+        {
+
+        }
+
+        /// <inheritdoc/>
+        public int PropWithoutBaseDefinition {  get; set; }
+
+        /// <inheritdoc/>
+        private int fieldWithoutBaseDefinitions;
     }
 }
