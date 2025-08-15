@@ -88,7 +88,7 @@ namespace XmlDocExtractionLib
                     if ((getter != null && getter.IsPrivate && map.TargetMethods[i] == getter)
                         || (setter != null && setter.IsPrivate && map.TargetMethods[i] == setter))
                     {
-                        declaringInterfaceProperty = GetPropertyInfoFromAccessor(map.InterfaceMethods[i]);
+                        declaringInterfaceProperty = map.InterfaceMethods[i].GetPropertyInfoFromAccessor();
                         return true;
                     }
                 }
@@ -129,70 +129,12 @@ namespace XmlDocExtractionLib
                     if ((adder != null && adder.IsPrivate && map.TargetMethods[i] == adder)
                         || (remover != null && remover.IsPrivate && map.TargetMethods[i] == remover))
                     {
-                        declaringInterfaceEvent = GetEventInfoFromAccessor(map.InterfaceMethods[i]);
+                        declaringInterfaceEvent = map.InterfaceMethods[i].GetEventInfoFromAccessor();
                         return true;
                     }
                 }
             }
             return false;
-        }
-
-        /// <summary>
-        /// Retrieve the <see cref="PropertyInfo"/> of the property that the given
-        /// <paramref name="declaringInterfaceAccessorMethod"/> belongs to.
-        /// </summary>
-        /// <param name="declaringInterfaceAccessorMethod">The accessor (get or set) method of the property.</param>
-        /// <returns>
-        /// The <see cref="PropertyInfo"/> of the property that the given
-        /// <paramref name="declaringInterfaceAccessorMethod"/> belongs to.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// Thrown when the given <paramref name="declaringInterfaceAccessorMethod"/>
-        /// does not belong to any property.</exception>
-        private static PropertyInfo GetPropertyInfoFromAccessor(MethodBase declaringInterfaceAccessorMethod)
-        {
-            var declaringInterface = declaringInterfaceAccessorMethod.DeclaringType;
-
-            foreach (var prop in declaringInterface.GetProperties(bindingFlags))
-            {
-                if(declaringInterfaceAccessorMethod.Equals(prop.GetGetMethod(true))
-                   || declaringInterfaceAccessorMethod.Equals(prop.GetSetMethod(true)))
-                {
-                    return prop;
-                }
-            }
-
-            throw new ArgumentException($"The given {nameof(declaringInterfaceAccessorMethod)}: {declaringInterfaceAccessorMethod.Name} " +
-                                        $"is not a property accessor", nameof(declaringInterfaceAccessorMethod));
-        }
-
-        /// <summary>
-        /// Retrieve the <see cref="EventInfo"/> of the event that the given
-        /// <paramref name="declaringInterfaceAccessorMethod"/> belongs to.
-        /// </summary>
-        /// <param name="declaringInterfaceAccessorMethod">The accessor (add or remove) method of the event.</param>
-        /// <returns>
-        /// The <see cref="EventInfo"/> of the event that the given
-        /// <paramref name="declaringInterfaceAccessorMethod"/> belongs to.
-        /// </returns>
-        /// <exception cref="ArgumentException">
-        /// Thrown when the given <paramref name="declaringInterfaceAccessorMethod"/>
-        /// does not belong to any event.</exception>
-        private static EventInfo GetEventInfoFromAccessor(MethodBase declaringInterfaceAccessorMethod)
-        {
-            var declaringInterface = declaringInterfaceAccessorMethod.DeclaringType;
-
-            foreach (var eventInfo in declaringInterface.GetEvents(bindingFlags))
-            {
-                if (declaringInterfaceAccessorMethod.Equals(eventInfo.GetAddMethod(true))
-                   || declaringInterfaceAccessorMethod.Equals(eventInfo.GetRemoveMethod(true)))
-                {
-                    return eventInfo;
-                }
-            }
-
-            throw new ArgumentException($"The given {nameof(declaringInterfaceAccessorMethod)}: {declaringInterfaceAccessorMethod.Name} " +
-                                        $"is not an event accessor", nameof(declaringInterfaceAccessorMethod));
         }
     }
 }
