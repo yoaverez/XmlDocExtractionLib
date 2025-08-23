@@ -36,19 +36,22 @@ namespace XmlDocExtractionLib
             declaringInterfaceMethod = default;
 
             // Explicit implementation means that the method should be private.
-            if(!method.IsPrivate)
+            if (!method.IsPrivate)
                 return false;
 
             var type = method.DeclaringType;
-            foreach (var interfaceType in type.GetInterfaces())
+            if (!type.IsInterface)
             {
-                var map = type.GetInterfaceMap(interfaceType);
-                for (int i = 0; i < map.TargetMethods.Length; i++)
+                foreach (var interfaceType in type.GetInterfaces())
                 {
-                    if (map.TargetMethods[i] == method)
+                    var map = type.GetInterfaceMap(interfaceType);
+                    for (int i = 0; i < map.TargetMethods.Length; i++)
                     {
-                        declaringInterfaceMethod = map.InterfaceMethods[i];
-                        return true;
+                        if (map.TargetMethods[i] == method)
+                        {
+                            declaringInterfaceMethod = map.InterfaceMethods[i];
+                            return true;
+                        }
                     }
                 }
             }
@@ -80,16 +83,19 @@ namespace XmlDocExtractionLib
             var setter = property.GetSetMethod(true);
 
             var type = property.DeclaringType;
-            foreach (var interfaceType in type.GetInterfaces())
+            if (!type.IsInterface)
             {
-                var map = type.GetInterfaceMap(interfaceType);
-                for (int i = 0; i < map.TargetMethods.Length; i++)
+                foreach (var interfaceType in type.GetInterfaces())
                 {
-                    if ((getter != null && getter.IsPrivate && map.TargetMethods[i] == getter)
-                        || (setter != null && setter.IsPrivate && map.TargetMethods[i] == setter))
+                    var map = type.GetInterfaceMap(interfaceType);
+                    for (int i = 0; i < map.TargetMethods.Length; i++)
                     {
-                        declaringInterfaceProperty = map.InterfaceMethods[i].GetPropertyInfoFromAccessor();
-                        return true;
+                        if ((getter != null && getter.IsPrivate && map.TargetMethods[i] == getter)
+                            || (setter != null && setter.IsPrivate && map.TargetMethods[i] == setter))
+                        {
+                            declaringInterfaceProperty = map.InterfaceMethods[i].GetPropertyInfoFromAccessor();
+                            return true;
+                        }
                     }
                 }
             }
@@ -121,16 +127,19 @@ namespace XmlDocExtractionLib
             var remover = eventInfo.GetRemoveMethod(true);
 
             var type = eventInfo.DeclaringType;
-            foreach (var interfaceType in type.GetInterfaces())
+            if (!type.IsInterface)
             {
-                var map = type.GetInterfaceMap(interfaceType);
-                for (int i = 0; i < map.TargetMethods.Length; i++)
+                foreach (var interfaceType in type.GetInterfaces())
                 {
-                    if ((adder != null && adder.IsPrivate && map.TargetMethods[i] == adder)
-                        || (remover != null && remover.IsPrivate && map.TargetMethods[i] == remover))
+                    var map = type.GetInterfaceMap(interfaceType);
+                    for (int i = 0; i < map.TargetMethods.Length; i++)
                     {
-                        declaringInterfaceEvent = map.InterfaceMethods[i].GetEventInfoFromAccessor();
-                        return true;
+                        if ((adder != null && adder.IsPrivate && map.TargetMethods[i] == adder)
+                            || (remover != null && remover.IsPrivate && map.TargetMethods[i] == remover))
+                        {
+                            declaringInterfaceEvent = map.InterfaceMethods[i].GetEventInfoFromAccessor();
+                            return true;
+                        }
                     }
                 }
             }

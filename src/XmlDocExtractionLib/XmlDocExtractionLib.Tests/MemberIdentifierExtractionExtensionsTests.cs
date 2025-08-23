@@ -125,6 +125,8 @@ namespace XmlDocExtractionLib.Tests
         [DataRow(typeof(DummyGenericType<,>.DummyGenericNestedType<>), "Prop01")]
         [DataRow(typeof(IDummyInterface), "Prop001")]
         [DataRow(typeof(IDummyGenericInterface<>), "Prop0001")]
+        [DataRow(typeof(SubDummyClass), "Prop1")]
+        [DataRow(typeof(SubDummyClass), "VirtualProp1")]
         [DataTestMethod]
         public void GetPropertyNameIdentifier_IdentifierIsCorrect(Type type, string propertyName)
         {
@@ -167,6 +169,8 @@ namespace XmlDocExtractionLib.Tests
         [DataRow(typeof(DummyGenericType<,>.DummyGenericNestedType<>), "Event01")]
         [DataRow(typeof(IDummyInterface), "Event001")]
         [DataRow(typeof(IDummyGenericInterface<>), "Event0001")]
+        [DataRow(typeof(SubDummyClass), "Event1")]
+        [DataRow(typeof(SubDummyClass), "VirtualEvent1")]
         [DataTestMethod]
         public void GetEventNameIdentifier_IdentifierIsCorrect(Type type, string eventName)
         {
@@ -213,6 +217,8 @@ namespace XmlDocExtractionLib.Tests
         [DataRow(typeof(DummyGenericType<,>.DummyGenericNestedType<>), "Method01")]
         [DataRow(typeof(IDummyInterface), "Method001")]
         [DataRow(typeof(IDummyGenericInterface<>), "Method0001")]
+        [DataRow(typeof(SubDummyClass), "Method1")]
+        [DataRow(typeof(SubDummyClass), "VirtualMethod1")]
         [DataTestMethod]
         public void GetMethodNameIdentifier_IdentifierIsCorrect(Type type, string methodName)
         {

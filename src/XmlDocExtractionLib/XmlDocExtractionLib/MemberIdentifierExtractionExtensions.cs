@@ -48,7 +48,7 @@ namespace XmlDocExtractionLib
         /// <returns>The xml documentation identifier of the given <paramref name="fieldInfo"/>.</returns>
         public static string GetFieldNameIdentifier(this FieldInfo fieldInfo)
         {
-            return $"F:{GetTypeNameIdentifierWithoutPrefix(fieldInfo.ReflectedType)}.{fieldInfo.Name}";
+            return $"F:{GetTypeNameIdentifierWithoutPrefix(fieldInfo.DeclaringType)}.{fieldInfo.Name}";
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace XmlDocExtractionLib
             if (propertyInfo.IsExplicitInterfaceImplementation(out _))
                 propertyName = ConvertToExplicitInterfaceImplementationIdentifier(propertyName);
 
-            return $"P:{GetTypeNameIdentifierWithoutPrefix(propertyInfo.ReflectedType)}.{propertyName}";
+            return $"P:{GetTypeNameIdentifierWithoutPrefix(propertyInfo.DeclaringType)}.{propertyName}";
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace XmlDocExtractionLib
             if (eventInfo.IsExplicitInterfaceImplementation(out _))
                 eventName = ConvertToExplicitInterfaceImplementationIdentifier(eventName);
 
-            return $"E:{GetTypeNameIdentifierWithoutPrefix(eventInfo.ReflectedType)}.{eventName}";
+            return $"E:{GetTypeNameIdentifierWithoutPrefix(eventInfo.DeclaringType)}.{eventName}";
         }
 
         /// <summary>
@@ -101,11 +101,11 @@ namespace XmlDocExtractionLib
         /// <returns>The xml documentation identifier of the given <paramref name="methodBase"/>.</returns>
         public static string GetMethodNameIdentifier(this MethodBase methodBase)
         {
-            var reflectedType = methodBase.ReflectedType;
-            var reflectedTypeIdentifier = GetTypeNameIdentifierWithoutPrefix(reflectedType);
+            var declaringType = methodBase.DeclaringType;
+            var reflectedTypeIdentifier = GetTypeNameIdentifierWithoutPrefix(declaringType);
 
             var methodName = methodBase.Name;
-            if (methodBase.IsConstructor)
+            if (methodBase.MemberType == MemberTypes.Constructor)
             {
                 methodName = "#ctor";
             }
@@ -116,14 +116,14 @@ namespace XmlDocExtractionLib
             }
 
             var typeGenericMap = new Dictionary<string, int>();
-            var typeGenericArguments = reflectedType.GetGenericArguments();
+            var typeGenericArguments = declaringType.GetGenericArguments();
             for (int i = 0; i < typeGenericArguments.Length; i++)
             {
                 typeGenericMap.Add(typeGenericArguments[i].Name, i);
             }
 
             var methodGenericMap = new Dictionary<string, int>();
-            var methodGenericArguments = methodBase.IsConstructor ? Array.Empty<Type>() : methodBase.GetGenericArguments();
+            var methodGenericArguments = methodBase.MemberType == MemberTypes.Constructor ? Array.Empty<Type>() : methodBase.GetGenericArguments();
             for (int i = 0; i < methodGenericArguments.Length; i++)
             {
                 methodGenericMap.Add(methodGenericArguments[i].Name, i);

@@ -54,7 +54,7 @@ namespace XmlDocExtractionLib
         {
             var ctorParams = constructor.GetParameters().Select(x => x.ParameterType).ToArray();
 
-            var baseType = constructor.ReflectedType.BaseType;
+            var baseType = constructor.DeclaringType.BaseType;
             while (baseType != null)
             {
                 var ctor = baseType?.GetConstructor(bindingFlags, null, ctorParams, null);
@@ -81,15 +81,15 @@ namespace XmlDocExtractionLib
         /// <returns>The base definitions of the given <paramref name="method"/>.</returns>
         public static IEnumerable<MethodInfo> GetMethodBaseDefinitions(this MethodInfo method)
         {
-            var reflectedType = method.ReflectedType;
+            var declaringType = method.DeclaringType;
 
-            if (!reflectedType.IsInterface)
+            if (!declaringType.IsInterface)
             {
                 // Method is override (without new modifier and no self proclaimed).
                 if (!method.Equals(method.GetBaseDefinition()))
                 {
                     var methodParams = method.GetParameters().Select(x => x.ParameterType).ToArray();
-                    var currentBase = reflectedType.BaseType;
+                    var currentBase = declaringType.BaseType;
                     while (currentBase != null)
                     {
                         var candidateMethod = currentBase.GetMethod(method.Name, bindingFlags, null, methodParams, null);
@@ -104,9 +104,9 @@ namespace XmlDocExtractionLib
 
             // Check for first interface that defines the method.
             var isInterfaceMethodFound = false;
-            foreach (var implementedInterface in reflectedType.GetInterfaces())
+            foreach (var implementedInterface in declaringType.GetInterfaces())
             {
-                var map = reflectedType.GetInterfaceMap(implementedInterface);
+                var map = declaringType.GetInterfaceMap(implementedInterface);
                 for (int i = 0; i < map.TargetMethods.Length; i++)
                 {
                     if (map.TargetMethods[i].Equals(method))

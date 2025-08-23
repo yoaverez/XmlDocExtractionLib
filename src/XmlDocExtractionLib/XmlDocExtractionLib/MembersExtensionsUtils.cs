@@ -15,60 +15,60 @@ namespace XmlDocExtractionLib
 
         /// <summary>
         /// Retrieve the <see cref="PropertyInfo"/> of the property that the given
-        /// <paramref name="declaringInterfaceAccessorMethod"/> belongs to.
+        /// <paramref name="accessorMethod"/> belongs to.
         /// </summary>
-        /// <param name="declaringInterfaceAccessorMethod">The accessor (get or set) method of the property.</param>
+        /// <param name="accessorMethod">The accessor (get or set) method of the property.</param>
         /// <returns>
         /// The <see cref="PropertyInfo"/> of the property that the given
-        /// <paramref name="declaringInterfaceAccessorMethod"/> belongs to.
+        /// <paramref name="accessorMethod"/> belongs to.
         /// </returns>
         /// <exception cref="ArgumentException">
-        /// Thrown when the given <paramref name="declaringInterfaceAccessorMethod"/>
+        /// Thrown when the given <paramref name="accessorMethod"/>
         /// does not belong to any property.</exception>
-        public static PropertyInfo GetPropertyInfoFromAccessor(this MethodBase declaringInterfaceAccessorMethod)
+        public static PropertyInfo GetPropertyInfoFromAccessor(this MethodBase accessorMethod)
         {
-            var declaringInterface = declaringInterfaceAccessorMethod.ReflectedType;
+            var declaringAccessor = accessorMethod.DeclaringType;
 
-            foreach (var prop in declaringInterface.GetProperties(bindingFlags))
+            foreach (var prop in declaringAccessor.GetProperties(bindingFlags))
             {
-                if (declaringInterfaceAccessorMethod.Equals(prop.GetGetMethod(true))
-                   || declaringInterfaceAccessorMethod.Equals(prop.GetSetMethod(true)))
+                if (accessorMethod.Equals(prop.GetGetMethod(true))
+                   || accessorMethod.Equals(prop.GetSetMethod(true)))
                 {
                     return prop;
                 }
             }
 
-            throw new ArgumentException($"The given {nameof(declaringInterfaceAccessorMethod)}: {declaringInterfaceAccessorMethod.Name} " +
-                                        $"is not a property accessor", nameof(declaringInterfaceAccessorMethod));
+            throw new ArgumentException($"The given {nameof(accessorMethod)}: {accessorMethod.Name} " +
+                                        $"is not a property accessor", nameof(accessorMethod));
         }
 
         /// <summary>
         /// Retrieve the <see cref="EventInfo"/> of the event that the given
-        /// <paramref name="declaringInterfaceAccessorMethod"/> belongs to.
+        /// <paramref name="accessorMethod"/> belongs to.
         /// </summary>
-        /// <param name="declaringInterfaceAccessorMethod">The accessor (add or remove) method of the event.</param>
+        /// <param name="accessorMethod">The accessor (add or remove) method of the event.</param>
         /// <returns>
         /// The <see cref="EventInfo"/> of the event that the given
-        /// <paramref name="declaringInterfaceAccessorMethod"/> belongs to.
+        /// <paramref name="accessorMethod"/> belongs to.
         /// </returns>
         /// <exception cref="ArgumentException">
-        /// Thrown when the given <paramref name="declaringInterfaceAccessorMethod"/>
+        /// Thrown when the given <paramref name="accessorMethod"/>
         /// does not belong to any event.</exception>
-        public static EventInfo GetEventInfoFromAccessor(this MethodBase declaringInterfaceAccessorMethod)
+        public static EventInfo GetEventInfoFromAccessor(this MethodBase accessorMethod)
         {
-            var declaringInterface = declaringInterfaceAccessorMethod.ReflectedType;
+            var declaringAccessor = accessorMethod.DeclaringType;
 
-            foreach (var eventInfo in declaringInterface.GetEvents(bindingFlags))
+            foreach (var eventInfo in declaringAccessor.GetEvents(bindingFlags))
             {
-                if (declaringInterfaceAccessorMethod.Equals(eventInfo.GetAddMethod(true))
-                   || declaringInterfaceAccessorMethod.Equals(eventInfo.GetRemoveMethod(true)))
+                if (accessorMethod.Equals(eventInfo.GetAddMethod(true))
+                   || accessorMethod.Equals(eventInfo.GetRemoveMethod(true)))
                 {
                     return eventInfo;
                 }
             }
 
-            throw new ArgumentException($"The given {nameof(declaringInterfaceAccessorMethod)}: {declaringInterfaceAccessorMethod.Name} " +
-                                        $"is not an event accessor", nameof(declaringInterfaceAccessorMethod));
+            throw new ArgumentException($"The given {nameof(accessorMethod)}: {accessorMethod.Name} " +
+                                        $"is not an event accessor", nameof(accessorMethod));
         }
     }
 }
