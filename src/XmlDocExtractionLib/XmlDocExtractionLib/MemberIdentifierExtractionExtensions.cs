@@ -31,27 +31,6 @@ namespace XmlDocExtractionLib
         }
 
         /// <summary>
-        /// Gets the xml documentation identifier of the given <paramref name="type"/>.
-        /// </summary>
-        /// <param name="type">The type whose xml documentation identifier is requested.</param>
-        /// <returns>The xml documentation identifier of the given <paramref name="type"/>.</returns>
-        public static string GetTypeNameIdentifier(this Type type)
-
-        {
-            return $"T:{GetTypeNameIdentifierWithoutPrefix(type)}";
-        }
-
-        /// <summary>
-        /// Gets the xml documentation identifier of the given <paramref name="fieldInfo"/>.
-        /// </summary>
-        /// <param name="fieldInfo">The field whose xml documentation identifier is requested.</param>
-        /// <returns>The xml documentation identifier of the given <paramref name="fieldInfo"/>.</returns>
-        public static string GetFieldNameIdentifier(this FieldInfo fieldInfo)
-        {
-            return $"F:{GetTypeNameIdentifierWithoutPrefix(fieldInfo.DeclaringType)}.{fieldInfo.Name}";
-        }
-
-        /// <summary>
         /// Gets the xml documentation identifier of the given enum value.
         /// </summary>
         /// <param name="enumType">The type of the enum whose value xml documentation identifier is requested.</param>
@@ -67,11 +46,32 @@ namespace XmlDocExtractionLib
         }
 
         /// <summary>
+        /// Gets the xml documentation identifier of the given <paramref name="type"/>.
+        /// </summary>
+        /// <param name="type">The type whose xml documentation identifier is requested.</param>
+        /// <returns>The xml documentation identifier of the given <paramref name="type"/>.</returns>
+        internal static string GetTypeNameIdentifier(this Type type)
+
+        {
+            return $"T:{GetTypeNameIdentifierWithoutPrefix(type)}";
+        }
+
+        /// <summary>
+        /// Gets the xml documentation identifier of the given <paramref name="fieldInfo"/>.
+        /// </summary>
+        /// <param name="fieldInfo">The field whose xml documentation identifier is requested.</param>
+        /// <returns>The xml documentation identifier of the given <paramref name="fieldInfo"/>.</returns>
+        internal static string GetFieldNameIdentifier(this FieldInfo fieldInfo)
+        {
+            return $"F:{GetTypeNameIdentifierWithoutPrefix(fieldInfo.DeclaringType)}.{fieldInfo.Name}";
+        }
+
+        /// <summary>
         /// Gets the xml documentation identifier of the given <paramref name="propertyInfo"/>.
         /// </summary>
         /// <param name="propertyInfo">The property whose xml documentation identifier is requested.</param>
         /// <returns>The xml documentation identifier of the given <paramref name="propertyInfo"/>.</returns>
-        public static string GetPropertyNameIdentifier(this PropertyInfo propertyInfo)
+        internal static string GetPropertyNameIdentifier(this PropertyInfo propertyInfo)
         {
             var propertyName = propertyInfo.Name;
             if (propertyInfo.IsExplicitInterfaceImplementation(out _))
@@ -85,7 +85,7 @@ namespace XmlDocExtractionLib
         /// </summary>
         /// <param name="eventInfo">The event whose xml documentation identifier is requested.</param>
         /// <returns>The xml documentation identifier of the given <paramref name="eventInfo"/>.</returns>
-        public static string GetEventNameIdentifier(this EventInfo eventInfo)
+        internal static string GetEventNameIdentifier(this EventInfo eventInfo)
         {
             var eventName = eventInfo.Name;
             if (eventInfo.IsExplicitInterfaceImplementation(out _))
@@ -99,7 +99,7 @@ namespace XmlDocExtractionLib
         /// </summary>
         /// <param name="methodBase">The method (including ctors) whose xml documentation identifier is requested.</param>
         /// <returns>The xml documentation identifier of the given <paramref name="methodBase"/>.</returns>
-        public static string GetMethodNameIdentifier(this MethodBase methodBase)
+        internal static string GetMethodNameIdentifier(this MethodBase methodBase)
         {
             var declaringType = methodBase.DeclaringType;
             var reflectedTypeIdentifier = GetTypeNameIdentifierWithoutPrefix(declaringType);

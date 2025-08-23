@@ -7,7 +7,7 @@ namespace XmlDocExtractionLib
     /// Extension methods for checking if a member represents
     /// an explicit interface implementation.
     /// </summary>
-    public static class ExplicitInterfaceImplementationExtensions
+    internal static class ExplicitInterfaceImplementationExtensions
     {
         /// <summary>
         /// Binding flags for finding members.

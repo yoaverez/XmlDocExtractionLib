@@ -6,7 +6,7 @@ namespace XmlDocExtractionLib
     /// <summary>
     /// Generic extensions methods for <see cref="MemberInfo"/>.
     /// </summary>
-    public static class MembersExtensionsUtils
+    internal static class MembersExtensionsUtils
     {
         /// <summary>
         /// Binding flags for finding members.
