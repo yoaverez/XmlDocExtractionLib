@@ -1,25 +1,10 @@
-# XmlDocExtractionLib
-
-## Table of Contents
-
-1. [Introduction](#1-introduction)
-2. [Installation](#2-installation)
-3. [Getting Started](#3-getting-started)
-
-## 1. Introduction
+## About
 
 XmlDocExtractionLib is an easy to use library designed to extract xml
 documentation from types and members from a documentation xml file that is generated
 by the compiler.
 
-### 1.2 Library Purpose
-
-While there are existing libraries that extract xml documentation from types 
-and members, they are usually limited in their ability to resolve `inheritdoc`
-elements from multiple assemblies. This library lets the user to pass a context
-object which allows for a more custom and thoroughly search of inherit documentation.
-
-### 1.3 Key Features
+## Key Features
 
 - Support extracting documentation from members with the new modifier.
 - Support extracting documentation from enum values.
@@ -30,46 +15,8 @@ object which allows for a more custom and thoroughly search of inherit documenta
     * Extension methods for getting members base definitions.
     * The resolver that resolve inherit documentation.
 
-## 2. Installation
-
-### 📦 NuGet Package (recommended)
-
-Install the XmlDocExtractionLib via NuGet Package Manager:
-
-```sh
-dotnet add package XmlDocExtractionLib
-```
-
-Or using the Package Manager Console in Visual Studio:
-
-```powershell
-Install-Package XmlDocExtractionLib
-```
-
-### 🛠️ Build from Source
-
-If you want to build the library from source:
-
-1. Clone the repository:
-
-   ```sh
-   git clone https://github.com/yoaverez/XmlDocExtractionLib.git
-   cd XmlDocExtractionLib
-   ```
-
-2. Build the project:
-
-   ```sh
-   dotnet build
-   ```
-
-3. (Optional) Reference the built DLL in your project.
-
-## 3. Getting Started
-
-The library is meant to use in the following way:
-
-```csharp
+## How to Use
+```cs
 // Add this using in order to be able to use the extension methods.
 using XmlDocExtractionLib;
 
