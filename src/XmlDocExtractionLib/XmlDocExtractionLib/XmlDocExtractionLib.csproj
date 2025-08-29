@@ -2,6 +2,29 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion>latest</LangVersion>
+    <Version>1.0.0</Version>
+    <Authors>yoaverez</Authors>
+    <Description>A package for extracting xml documentation from C# types and members.</Description>
+    <RepositoryUrl>https://github.com/yoaverez/XmlDocExtractionLib</RepositoryUrl>
+    <PackageTags>doc;xml;documentation;comment;comments;xmldoc</PackageTags>
+    <Copyright>Copyright (c) 2025 yoaverez</Copyright>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageReleaseNotes>Core library functionality</PackageReleaseNotes>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>PACKAGE.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\..\PACKAGE.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
