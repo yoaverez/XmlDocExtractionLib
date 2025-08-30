@@ -4,14 +4,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>latest</LangVersion>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>yoaverez</Authors>
     <Description>A package for extracting xml documentation from C# types and members.</Description>
     <RepositoryUrl>https://github.com/yoaverez/XmlDocExtractionLib</RepositoryUrl>
     <PackageTags>doc;xml;documentation;comment;comments;xmldoc</PackageTags>
     <Copyright>Copyright (c) 2025 yoaverez</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageReleaseNotes>Core library functionality</PackageReleaseNotes>
+    <PackageReleaseNotes>Preserve white spaces when loading xmls</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>PACKAGE.md</PackageReadmeFile>
   </PropertyGroup>
