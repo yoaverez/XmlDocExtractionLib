@@ -71,11 +71,15 @@ namespace XmlDocExtractionLib.Tests
             var expectedDocs = new XElement(xmlMembers[expectedMember.GetMemberIdentifier()]);
             expectedDocs.Attribute("name")!.Value = testedMember.GetMemberIdentifier();
 
+            // This is needed since the removal of trailing white spaces
+            // comes after element and not before element.
+            var expectedDocsString = expectedDocs.ToString().Replace("</member>", "    </member>");
+
             // Act
             var actualDocs = testedMember.GetXmlDocumentation(xmlExtractionContext, resolveInheritdoc);
 
             // Assert
-            Assert.AreEqual(expectedDocs.ToString(), actualDocs.ToString());
+            Assert.AreEqual(expectedDocsString, actualDocs.ToString());
         }
 
         [DataRow(false)]
@@ -90,11 +94,15 @@ namespace XmlDocExtractionLib.Tests
             var expectedDocs = new XElement(xmlMembers[expectedMember.GetMemberIdentifier()]);
             expectedDocs.Attribute("name")!.Value = testedMember.GetMemberIdentifier();
 
+            // This is needed since the removal of trailing white spaces
+            // comes after element and not before element.
+            var expectedDocsString = expectedDocs.ToString().Replace("</member>", "    </member>");
+
             // Act
             var actualDocs = testedMember.GetXmlDocumentation(xmlExtractionContext, resolveInheritdoc);
 
             // Assert
-            Assert.AreEqual(expectedDocs.ToString(), actualDocs.ToString());
+            Assert.AreEqual(expectedDocsString, actualDocs.ToString());
         }
 
         [DataRow(false)]
@@ -168,11 +176,15 @@ namespace XmlDocExtractionLib.Tests
             var expectedDocs = new XElement(xmlMembers[testedEnumType.GetEnumValueNameIdentifier(valueWithExpectedDocs)]);
             expectedDocs.Attribute("name")!.Value = testedEnumType.GetEnumValueNameIdentifier((int)DummyEnum2.ValueWithDuplicateDocs);
 
+            // This is needed since the removal of trailing white spaces
+            // comes after element and not before element.
+            var expectedDocsString = expectedDocs.ToString().Replace("</member>", "    </member>");
+
             // Act
             var actualDocs = testedEnumType.GetEnumValueXmlDocumentation((int)DummyEnum2.ValueWithDuplicateDocs, xmlExtractionContext, resolveInheritdoc);
 
             // Assert
-            Assert.AreEqual(expectedDocs.ToString(), actualDocs.ToString());
+            Assert.AreEqual(expectedDocsString, actualDocs.ToString());
         }
 
         [DataRow(false)]

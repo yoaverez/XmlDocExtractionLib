@@ -91,21 +91,21 @@ namespace XmlDocExtractionLib
                         // Therefore, if we got here, we are not in the first two levels
                         // of the xml member documentation and we do not have the path attribute
                         // so we just remove this inheritdoc.
-                        inheritdocNode.Remove();
+                        inheritdocNode.RemoveElementWithNextWhitespace();
                     }
                     else
                     {
                         pathValue ??= inheritdocNode.GetXPathFromMember();
 
                         var xpathEvaluation = resolveInheritDocumentation.XPathEvaluate(pathValue);
-                        inheritdocNode.ReplaceWith(xpathEvaluation);
+                        inheritdocNode.ReplaceElementAndRemovePrevAndNextWhitespace(xpathEvaluation);
                     }
                 }
                 else
                 {
                     // Could not resolve inheritdoc so just
                     // remove it.
-                    inheritdocNode.Remove();
+                    inheritdocNode.RemoveElementWithNextWhitespace();
                 }
             }
 

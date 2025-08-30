@@ -140,7 +140,7 @@ namespace XmlDocExtractionLib
                 if (elementsWithNoIdentifier.Contains(elementName))
                 {
                     if (seenSingleElements.Contains(elementName))
-                        element.Remove();
+                        element.RemoveElementWithNextWhitespace();
                     else
                         seenSingleElements.Add(elementName);
                 }
@@ -152,7 +152,7 @@ namespace XmlDocExtractionLib
                     if(seenMultipleElements.TryGetValue(elementName, out var attributesValues))
                     {
                         if (attributesValues.Contains(attribute))
-                            element.Remove();
+                            element.RemoveElementWithNextWhitespace();
                         else
                             attributesValues.Add(attribute);
                     }

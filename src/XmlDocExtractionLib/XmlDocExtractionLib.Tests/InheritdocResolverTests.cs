@@ -37,7 +37,7 @@ namespace XmlDocExtractionLib.Tests
 
             var copyOfBaseMember = new XElement(baseMemberXml);
             var expectedResolvedMember = new XElement(memberXml);
-            expectedResolvedMember.Descendants("inheritdoc").Single().ReplaceWith(copyOfBaseMember.XPathEvaluate("/node()"));
+            expectedResolvedMember.Descendants("inheritdoc").Single().ReplaceElementAndRemovePrevAndNextWhitespace(copyOfBaseMember.XPathEvaluate("/node()"));
 
             // Act
             var actualResolvedMember = InheritdocResolver.ResolveInheritDocumentation(memberXml, xmlExtractionContext, testedMember);
@@ -58,7 +58,7 @@ namespace XmlDocExtractionLib.Tests
 
             var copyOfBaseMember = new XElement(baseMemberXml);
             var expectedResolvedMember = new XElement(memberXml);
-            expectedResolvedMember.Descendants("inheritdoc").Single().ReplaceWith(copyOfBaseMember.XPathEvaluate("/node()"));
+            expectedResolvedMember.Descendants("inheritdoc").Single().ReplaceElementAndRemovePrevAndNextWhitespace(copyOfBaseMember.XPathEvaluate("/node()"));
 
             // Act
             var actualResolvedMember = InheritdocResolver.ResolveInheritDocumentation(memberXml, xmlExtractionContext, testedMember);
@@ -79,7 +79,7 @@ namespace XmlDocExtractionLib.Tests
 
             var copyOfMemberFromWhichToInherit = new XElement(memberFromWhichToInheritXml);
             var expectedResolvedMember = new XElement(memberXml);
-            expectedResolvedMember.Descendants("inheritdoc").Single().ReplaceWith(copyOfMemberFromWhichToInherit.XPathEvaluate("/summary/node()"));
+            expectedResolvedMember.Descendants("inheritdoc").Single().ReplaceElementAndRemovePrevAndNextWhitespace(copyOfMemberFromWhichToInherit.XPathEvaluate("/summary/node()"));
 
             // Act
             var actualResolvedMember = InheritdocResolver.ResolveInheritDocumentation(memberXml, xmlExtractionContext, testedMember);
@@ -100,7 +100,7 @@ namespace XmlDocExtractionLib.Tests
 
             var copyOfMemberFromWhichToInherit = new XElement(memberFromWhichToInheritXml);
             var expectedResolvedMember = new XElement(memberXml);
-            expectedResolvedMember.Descendants("inheritdoc").Single().ReplaceWith(copyOfMemberFromWhichToInherit.XPathEvaluate("/param/node()"));
+            expectedResolvedMember.Descendants("inheritdoc").Single().ReplaceElementAndRemovePrevAndNextWhitespace(copyOfMemberFromWhichToInherit.XPathEvaluate("/param/node()"));
 
             // Act
             var actualResolvedMember = InheritdocResolver.ResolveInheritDocumentation(memberXml, xmlExtractionContext, testedMember);
@@ -117,7 +117,7 @@ namespace XmlDocExtractionLib.Tests
             xmlExtractionContext.TryGetMemberXmlDocsFromMember(testedMember, out var memberXml);
 
             var expectedResolvedMember = new XElement(memberXml);
-            expectedResolvedMember.Descendants("inheritdoc").Single().Remove();
+            expectedResolvedMember.Descendants("inheritdoc").Single().RemoveElementWithNextWhitespace();
 
             // Act
             var actualResolvedMember = InheritdocResolver.ResolveInheritDocumentation(memberXml, xmlExtractionContext, testedMember);
@@ -138,7 +138,7 @@ namespace XmlDocExtractionLib.Tests
 
             var copyOfMemberFromWhichToInherit = new XElement(memberFromWhichToInheritXml);
             var expectedResolvedMember = new XElement(memberXml);
-            expectedResolvedMember.Descendants("inheritdoc").Single().ReplaceWith(copyOfMemberFromWhichToInherit.XPathEvaluate("/summary/node()"));
+            expectedResolvedMember.Descendants("inheritdoc").Single().ReplaceElementAndRemovePrevAndNextWhitespace(copyOfMemberFromWhichToInherit.XPathEvaluate("/summary/node()"));
 
             // Act
             var actualResolvedMember = InheritdocResolver.ResolveInheritDocumentation(memberXml, xmlExtractionContext, testedMember);
@@ -159,7 +159,7 @@ namespace XmlDocExtractionLib.Tests
 
             var copyOfMemberFromWhichToInherit = new XElement(memberFromWhichToInheritXml);
             var expectedResolvedMember = new XElement(memberXml);
-            expectedResolvedMember.Descendants("inheritdoc").Single().ReplaceWith(copyOfMemberFromWhichToInherit.XPathEvaluate("/node()"));
+            expectedResolvedMember.Descendants("inheritdoc").Single().ReplaceElementAndRemovePrevAndNextWhitespace(copyOfMemberFromWhichToInherit.XPathEvaluate("/node()"));
 
             // Act
             var actualResolvedMember = InheritdocResolver.ResolveInheritDocumentation(memberXml, xmlExtractionContext, testedMember);
@@ -180,7 +180,7 @@ namespace XmlDocExtractionLib.Tests
 
             var copyOfMemberFromWhichToInherit = new XElement(memberFromWhichToInheritXml);
             var expectedResolvedMember = new XElement(memberXml);
-            expectedResolvedMember.Descendants("inheritdoc").Single().ReplaceWith(copyOfMemberFromWhichToInherit.XPathEvaluate("/node()"));
+            expectedResolvedMember.Descendants("inheritdoc").Single().ReplaceElementAndRemovePrevAndNextWhitespace(copyOfMemberFromWhichToInherit.XPathEvaluate("/node()"));
 
             // Act
             var actualResolvedMember = InheritdocResolver.ResolveInheritDocumentation(memberXml, xmlExtractionContext, testedMember);
@@ -197,7 +197,7 @@ namespace XmlDocExtractionLib.Tests
             xmlExtractionContext.TryGetMemberXmlDocsFromMember(testedMember, out var memberXml);
 
             var expectedResolvedMember = new XElement(memberXml);
-            expectedResolvedMember.Descendants("inheritdoc").Single().Remove();
+            expectedResolvedMember.Descendants("inheritdoc").Single().RemoveElementWithNextWhitespace();
 
             // Act
             var actualResolvedMember = InheritdocResolver.ResolveInheritDocumentation(memberXml, xmlExtractionContext, testedMember);
@@ -214,7 +214,7 @@ namespace XmlDocExtractionLib.Tests
             xmlExtractionContext.TryGetMemberXmlDocsFromMember(testedMember, out var memberXml);
 
             var expectedResolvedMember = new XElement(memberXml);
-            expectedResolvedMember.Descendants("inheritdoc").Single().Remove();
+            expectedResolvedMember.Descendants("inheritdoc").Single().RemoveElementWithNextWhitespace();
 
             // Act
             var actualResolvedMember = InheritdocResolver.ResolveInheritDocumentation(memberXml, xmlExtractionContext, testedMember);
@@ -231,7 +231,7 @@ namespace XmlDocExtractionLib.Tests
             xmlExtractionContext.TryGetMemberXmlDocsFromMember(testedMember, out var memberXml);
 
             var expectedResolvedMember = new XElement(memberXml);
-            expectedResolvedMember.Descendants("inheritdoc").Single().Remove();
+            expectedResolvedMember.Descendants("inheritdoc").Single().RemoveElementWithNextWhitespace();
 
             // Act
             var actualResolvedMember = InheritdocResolver.ResolveInheritDocumentation(memberXml, xmlExtractionContext, testedMember);
@@ -252,7 +252,7 @@ namespace XmlDocExtractionLib.Tests
 
             var copyOfBaseMember = new XElement(baseMemberXml);
             var expectedResolvedMember = new XElement(memberXml);
-            expectedResolvedMember.Descendants("inheritdoc").Single().ReplaceWith(copyOfBaseMember.XPathEvaluate("/node()"));
+            expectedResolvedMember.Descendants("inheritdoc").Single().ReplaceElementAndRemovePrevAndNextWhitespace(copyOfBaseMember.XPathEvaluate("/node()"));
 
             // Act
             var actualResolvedMember = InheritdocResolver.ResolveInheritDocumentation(memberXml, xmlExtractionContext, testedMember);
