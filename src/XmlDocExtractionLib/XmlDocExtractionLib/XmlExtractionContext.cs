@@ -112,7 +112,7 @@ namespace XmlDocExtractionLib
         /// <param name="pathToXmlDocumentation">The path to the xml documentation file to load.</param>
         private void LoadXml(string pathToXmlDocumentation)
         {
-            var xmlDocumentation = XDocument.Load(pathToXmlDocumentation);
+            var xmlDocumentation = XDocument.Load(pathToXmlDocumentation, LoadOptions.PreserveWhitespace);
             var xmlMembers = xmlDocumentation.Descendants("members")
                                              .Single()
                                              .Elements("member");

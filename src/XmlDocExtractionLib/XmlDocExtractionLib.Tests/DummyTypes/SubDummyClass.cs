@@ -1,6 +1,9 @@
 ﻿
 namespace XmlDocExtractionLib.Tests.DummyTypes
 {
+    /// <summary>
+    /// docs with <see langword="false"/> <see langword="true"/>.
+    /// </summary>
     public class SubDummyClass : AbstractDummyClass
     {
         /// <summary>

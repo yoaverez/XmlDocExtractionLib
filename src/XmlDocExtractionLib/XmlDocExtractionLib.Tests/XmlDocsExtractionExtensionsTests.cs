@@ -24,12 +24,12 @@ namespace XmlDocExtractionLib.Tests
             xmlExtractionContext.AddAssembly(testAssembly, testAssemblyXmlPath);
             xmlExtractionContext.AddAssembly(libAssembly, libAssemblyXmlPath);
 
-            var testXmlDocumentation = XDocument.Load(testAssemblyXmlPath);
+            var testXmlDocumentation = XDocument.Load(testAssemblyXmlPath, LoadOptions.PreserveWhitespace);
             var testXmlMembers = testXmlDocumentation.Descendants("members")
                                                      .Single()
                                                      .Elements("member");
 
-            var libXmlDocumentation = XDocument.Load(libAssemblyXmlPath);
+            var libXmlDocumentation = XDocument.Load(libAssemblyXmlPath, LoadOptions.PreserveWhitespace);
             var libXmlMembers = libXmlDocumentation.Descendants("members")
                                                    .Single()
                                                    .Elements("member");
@@ -71,11 +71,15 @@ namespace XmlDocExtractionLib.Tests
             var expectedDocs = new XElement(xmlMembers[expectedMember.GetMemberIdentifier()]);
             expectedDocs.Attribute("name")!.Value = testedMember.GetMemberIdentifier();
 
+            // This is needed since the removal of trailing white spaces
+            // comes after element and not before element.
+            var expectedDocsString = expectedDocs.ToString().Replace("</member>", "    </member>");
+
             // Act
             var actualDocs = testedMember.GetXmlDocumentation(xmlExtractionContext, resolveInheritdoc);
 
             // Assert
-            Assert.AreEqual(expectedDocs.ToString(), actualDocs.ToString());
+            Assert.AreEqual(expectedDocsString, actualDocs.ToString());
         }
 
         [DataRow(false)]
@@ -90,11 +94,15 @@ namespace XmlDocExtractionLib.Tests
             var expectedDocs = new XElement(xmlMembers[expectedMember.GetMemberIdentifier()]);
             expectedDocs.Attribute("name")!.Value = testedMember.GetMemberIdentifier();
 
+            // This is needed since the removal of trailing white spaces
+            // comes after element and not before element.
+            var expectedDocsString = expectedDocs.ToString().Replace("</member>", "    </member>");
+
             // Act
             var actualDocs = testedMember.GetXmlDocumentation(xmlExtractionContext, resolveInheritdoc);
 
             // Assert
-            Assert.AreEqual(expectedDocs.ToString(), actualDocs.ToString());
+            Assert.AreEqual(expectedDocsString, actualDocs.ToString());
         }
 
         [DataRow(false)]
@@ -110,6 +118,26 @@ namespace XmlDocExtractionLib.Tests
 
             // Assert
             Assert.IsNull(actualDocs);
+        }
+
+        [DataRow(false)]
+        [DataRow(true)]
+        [DataTestMethod]
+        public void GetXmlDocumentationOnMembers_MemberHasElementSpaceElementInDocs_WhitespaceIsPreserved(bool resolveInheritdoc)
+        {
+            // Arrange
+            MemberInfo testedMember = typeof(SubDummyClass);
+
+            var expectedString = $"<summary>{Environment.NewLine}" +
+                                 $"            docs with <see langword=\"false\"/> <see langword=\"true\"/>.{Environment.NewLine}" +
+                                 $"            </summary>";
+            var expectedDocs = XElement.Parse(expectedString, LoadOptions.PreserveWhitespace);
+
+            // Act
+            var actualDocs = testedMember.GetXmlDocumentation(xmlExtractionContext, resolveInheritdoc).Element("summary");
+
+            // Assert
+            Assert.AreEqual(expectedDocs.ToString(), actualDocs.ToString());
         }
 
         #endregion GetXmlDocumentation on Members Tests
@@ -148,11 +176,15 @@ namespace XmlDocExtractionLib.Tests
             var expectedDocs = new XElement(xmlMembers[testedEnumType.GetEnumValueNameIdentifier(valueWithExpectedDocs)]);
             expectedDocs.Attribute("name")!.Value = testedEnumType.GetEnumValueNameIdentifier((int)DummyEnum2.ValueWithDuplicateDocs);
 
+            // This is needed since the removal of trailing white spaces
+            // comes after element and not before element.
+            var expectedDocsString = expectedDocs.ToString().Replace("</member>", "    </member>");
+
             // Act
             var actualDocs = testedEnumType.GetEnumValueXmlDocumentation((int)DummyEnum2.ValueWithDuplicateDocs, xmlExtractionContext, resolveInheritdoc);
 
             // Assert
-            Assert.AreEqual(expectedDocs.ToString(), actualDocs.ToString());
+            Assert.AreEqual(expectedDocsString, actualDocs.ToString());
         }
 
         [DataRow(false)]
