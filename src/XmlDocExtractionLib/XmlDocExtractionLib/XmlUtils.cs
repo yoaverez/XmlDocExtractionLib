@@ -18,12 +18,12 @@ namespace XmlDocExtractionLib
         {
             var nextNode = element.NodesAfterSelf().FirstOrDefault();
             element.Remove();
-            if(nextNode != null)
+            if (nextNode != null)
             {
-                if(nextNode is XText textNode)
+                if (nextNode is XText textNode)
                 {
                     textNode.Value = textNode.Value.TrimStart();
-                    if(string.IsNullOrEmpty(textNode.Value))
+                    if (string.IsNullOrEmpty(textNode.Value))
                         textNode.Remove();
                 }
             }
@@ -38,16 +38,16 @@ namespace XmlDocExtractionLib
         /// <param name="xpathEvaluation">The replacement of the <paramref name="element"/>.</param>
         public static void ReplaceElementAndRemovePrevAndNextWhitespace(this XElement element, object xpathEvaluation)
         {
-            var nodes = (xpathEvaluation as IEnumerable)?.Cast<XNode>();
-            if (nodes is null)
+            if (xpathEvaluation is string || xpathEvaluation is not IEnumerable)
             {
                 element.ReplaceWith(xpathEvaluation);
             }
             else
             {
+                var nodes = (xpathEvaluation as IEnumerable)?.Cast<XNode>();
                 if (nodes.Any())
                 {
-                    if(nodes.First() is XText firstNodeText)
+                    if (nodes.First() is XText firstNodeText)
                         firstNodeText.Value = firstNodeText.Value.TrimStart();
 
                     if (nodes.Last() is XText lastNodeText)
@@ -55,11 +55,14 @@ namespace XmlDocExtractionLib
 
                     var noneEmptyNodes = nodes.Where(node =>
                     {
-                        return !(node is XText textNode) || string.IsNullOrEmpty(textNode.Value);
+                        // True if the node is not a text node or if the text node is not empty.
+                        return !(node is XText textNode) || !string.IsNullOrEmpty(textNode.Value);
                     });
 
                     if (noneEmptyNodes.Any())
                         element.ReplaceWith(noneEmptyNodes);
+                    else
+                        element.RemoveElementWithNextWhitespace();
                 }
                 else
                 {
