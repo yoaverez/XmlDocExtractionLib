@@ -18,7 +18,7 @@ namespace XmlDocExtractionLib.Tests
             bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static ;
 
             var xmlDocumentationFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            var xmlDocumentation = XDocument.Load(xmlDocumentationFile);
+            var xmlDocumentation = XDocument.Load(xmlDocumentationFile, LoadOptions.PreserveWhitespace);
             identifiersToSummary = xmlDocumentation.Descendants("members")
                                                    .Single()
                                                    .Elements("member")

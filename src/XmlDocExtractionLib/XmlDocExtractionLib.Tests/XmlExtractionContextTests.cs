@@ -32,12 +32,12 @@ namespace XmlDocExtractionLib.Tests
             libAssembly = typeof(XmlExtractionContext).Assembly;
             libAssemblyXmlPath = $"{libAssembly.GetName().Name!}.xml";
 
-            var testXmlDocumentation = XDocument.Load(testAssemblyXmlPath);
+            var testXmlDocumentation = XDocument.Load(testAssemblyXmlPath, LoadOptions.PreserveWhitespace);
             var testXmlMembers = testXmlDocumentation.Descendants("members")
                                                      .Single()
                                                      .Elements("member");
 
-            var libXmlDocumentation = XDocument.Load(libAssemblyXmlPath);
+            var libXmlDocumentation = XDocument.Load(libAssemblyXmlPath, LoadOptions.PreserveWhitespace);
             var libXmlMembers = libXmlDocumentation.Descendants("members")
                                                    .Single()
                                                    .Elements("member");
